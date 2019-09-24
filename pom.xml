@@ -5,6 +5,18 @@
   <artifactId>secuconnect-java-sdk-demo</artifactId>
   <version>1.0.0</version>
   <url>https://github.com/secuconnect/secuconnect-java-sdk</url>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>8</source>
+          <target>8</target>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
   <description>Secuconnect Java SDK Demo</description>
   <licenses>
     <license>
@@ -18,14 +30,14 @@
       <name>secuconnect</name>
       <email>info@secuconnect.com</email>
       <organization>secuconnect KG</organization>
-      <organizationUrl>http://secuconnect.com</organizationUrl>
+      <organizationUrl>https://secuconnect.com</organizationUrl>
     </developer>
   </developers>
   <dependencies>
     <dependency>
       <groupId>io.secuconnect</groupId>
       <artifactId>secuconnect-java-sdk</artifactId>
-      <version>1.2.1</version>
+      <version>LATEST</version>
     </dependency>
   </dependencies>
   <repositories>
