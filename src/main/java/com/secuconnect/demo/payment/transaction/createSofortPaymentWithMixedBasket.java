@@ -2,7 +2,7 @@ package com.secuconnect.demo.payment.transaction;
 
 import com.secuconnect.demo.getToken;
 import io.secuconnect.client.ApiException;
-import io.secuconnect.client.api.PaymentSecupayPrepaysApi;
+import io.secuconnect.client.api.PaymentSecupaySofortApi;
 import io.secuconnect.client.model.*;
 
 import java.util.ArrayList;
@@ -61,9 +61,9 @@ public class createPrepayPaymentWithMixedBasket {
             transaction.setBasket(new ArrayList<>());
             transaction.getBasket().add(subTransactionForSubContract);
 
-            PaymentSecupayPrepaysApi apiInstance = new PaymentSecupayPrepaysApi();
+            PaymentSecupaySofortApi apiInstance = new PaymentSecupaySofortApi();
             apiInstance.getApiClient().setAccessToken(getToken.accessToken);
-            SecupayTransactionProductModel response = apiInstance.paymentSecupayprepaysPost(transaction);
+            SecupayTransactionProductModel response = apiInstance.paymentSecupaysofortPost(transaction);
 
             System.out.print(response);
 
@@ -71,10 +71,10 @@ public class createPrepayPaymentWithMixedBasket {
              * Sample output:
              * ==============
              * class SecupayTransactionProductModel {
-             *     object: payment.secupayprepays
+             *     object: payment.secupaysofort
              *     id: vfpeiqugpdug3478433
              *     transId: 14251591
-             *     status: authorized
+             *     status: accepted
              *     amount: 3324
              *     currency: EUR
              *     basket: [class SecupayBasketItem {
@@ -101,7 +101,7 @@ public class createPrepayPaymentWithMixedBasket {
              *             total: 300
              *         }]
              *     }]
-             *     transactionStatus: 25
+             *     transactionStatus: 111
              *     accrual: true
              *     paymentAction: sale
              *     transferPurpose: TA 14251591
@@ -151,8 +151,8 @@ public class createPrepayPaymentWithMixedBasket {
              *         id: vfpeiqugpdug3478433_14251592
              *         transId: 14251592
              *         amount: 3324
-             *         transactionStatus: 25
-             *         status: authorized
+             *         transactionStatus: 111
+             *         status: accepted
              *         currency: EUR
              *     }]
              * }
