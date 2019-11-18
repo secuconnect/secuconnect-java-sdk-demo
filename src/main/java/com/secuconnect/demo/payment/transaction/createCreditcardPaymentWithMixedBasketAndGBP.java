@@ -2,34 +2,40 @@ package com.secuconnect.demo.payment.transaction;
 
 import com.secuconnect.demo.getToken;
 import io.secuconnect.client.ApiException;
-import io.secuconnect.client.api.PaymentSecupaySofortApi;
+import io.secuconnect.client.Configuration;
+import io.secuconnect.client.api.PaymentSecupayCreditcardsApi;
+import io.secuconnect.client.api.PaymentSecupayPrepaysApi;
 import io.secuconnect.client.model.*;
 
 import java.util.ArrayList;
 
-public class createSofortPaymentWithMixedBasket {
+public class createCreditcardPaymentWithMixedBasketAndGBP {
     public static void main(String[] args) {
         try {
-            getToken.main(null);
+            // Live-Server:
+//            Configuration.getDefaultApiClient().setBasePath("https://connect.secucard.com/api/v2");
+//            Configuration.getDefaultApiClient().setAuthHost("https://connect.secucard.com/");
+
+            getToken.main(null); // All currencies are using the same credentials!
 
             SecupayTransactionProductDTO transaction = new SecupayTransactionProductDTO();
             transaction.setOptData(new SecupayTransactionProductDTOOptData());
-            transaction.getOptData().setLanguage("de_DE"); // or "en_US"
+            transaction.getOptData().setLanguage("de_DE"); // or "en_US" for english
 
-            transaction.setAmount(3324); // in euro-cent
-            transaction.setCurrency("EUR");
-            transaction.setDemo(true);
+            transaction.setAmount(3324); // in pence
+            transaction.setCurrency("GBP");
+            transaction.setDemo(true); // transact does not allow GBP in the demo mode right now, so you can just create them but not complete the checkout with demo = true.
             transaction.setAccrual(true);
 
             transaction.setRedirectUrl(new SecupayRedirectUrl());
 
             transaction.setCustomer(new PaymentCustomersProductModel());
-            transaction.getCustomer().setId("PCU_3BBSV6C702NCA4HR70ZAVCAX3R6CAW"); // from "payment/customer/createCustomer.java"
+            transaction.getCustomer().setId("PCU_CMENVMVGS2NEZD67EPGT82MR5VR7AZ"); // from "payment/customer/createCustomer.java"
 
             SecupayBasketItem subTransactionForSubContract = new SecupayBasketItem();
             subTransactionForSubContract.setItemType("sub_transaction");
             subTransactionForSubContract.setName("Order 123");
-            subTransactionForSubContract.setContractId("PCR_2TEAKU97D2NC4JDAN0ZAVA49Z6TJA4"); // See "payment/contract/create*" for details
+            subTransactionForSubContract.setContractId("PCR_Z7WPQ7JM32NEZDB799E3CDC42GKVAW"); // See "payment/contract/create*" for details
             subTransactionForSubContract.setTotal(3324);
             subTransactionForSubContract.setSubBasket(new ArrayList<>(3));
 
@@ -53,17 +59,16 @@ public class createSofortPaymentWithMixedBasket {
 
             SecupayBasketItem basketItem3 = new SecupayBasketItem();
             basketItem3.setItemType("stakeholder_payment");
-            basketItem3.setContractId("PCR_M32SCZ98Q2N3U4GW70ZAVWWE47XPAH"); // This id is fixed for the platform
+            basketItem3.setContractId("PCR_2EGUEF7YT2MSZ9WV52TSDEGEK5URAW"); // This id is fixed for the platform
             basketItem3.setName("Platform Provision");
             basketItem3.setTotal(300);
-            subTransactionForSubContract.getSubBasket().add(basketItem3);
 
             transaction.setBasket(new ArrayList<>());
             transaction.getBasket().add(subTransactionForSubContract);
 
-            PaymentSecupaySofortApi apiInstance = new PaymentSecupaySofortApi();
+            PaymentSecupayCreditcardsApi apiInstance = new PaymentSecupayCreditcardsApi();
             apiInstance.getApiClient().setAccessToken(getToken.accessToken);
-            SecupayTransactionProductModel response = apiInstance.paymentSecupaysofortPost(transaction);
+            SecupayTransactionProductModel response = apiInstance.paymentSecupaycreditcardsPost(transaction);
 
             System.out.print(response);
 
@@ -71,12 +76,13 @@ public class createSofortPaymentWithMixedBasket {
              * Sample output:
              * ==============
              * class SecupayTransactionProductModel {
-             *     object: payment.secupaysofort
-             *     id: vfpeiqugpdug3478433
-             *     transId: 14251591
-             *     status: accepted
+             *     object: payment.secupaycreditcards
+             *     id: jtpjsbqwhpnc4033079
+             *     transId: 19862251
+             *     status: internal_server_status
              *     amount: 3324
              *     currency: EUR
+             *     purpose: 
              *     basket: [class SecupayBasketItem {
              *         itemType: sub_transaction
              *         name: Order 123
@@ -95,66 +101,45 @@ public class createSofortPaymentWithMixedBasket {
              *             tax: 19
              *             total: 2000
              *             price: 1000
-             *         }, class SecupayBasketItem {
-             *             itemType: stakeholder_payment
-             *             name: Platform Provision
-             *             total: 300
              *         }]
              *     }]
-             *     transactionStatus: 111
+             *     transactionStatus: 1
              *     accrual: true
              *     paymentAction: sale
-             *     transferPurpose: TA 14251591
-             *     transferAccount: class PaymentInformation {
-             *         iban: DE88300500000001747013
-             *         bic: WELADEDDXXX
-             *         owner: secupay AG
-             *         bankname: Landesbank Hessen-Thüringen Girozentrale NL. Düsseldorf
-             *     }
              *     customer: class PaymentCustomersProductModel {
              *         object: payment.customers
-             *         id: PCU_3BBSV6C702NCA4HR70ZAVCAX3R6CAW
+             *         id: PCU_CMENVMVGS2NEZD67EPGT82MR5VR7AZ
              *         contract: class ProductInstanceUID {
              *             object: payment.contracts
-             *             id: PCR_M32SCZ98Q2N3U4GW70ZAVWWE47XPAH
+             *             id: PCR_WREDJWU342NEZD479ZBZ79PN2THCAW
              *         }
              *         contact: class Contact {
              *             forename: John
              *             surname: Doe
              *             companyname: Example Inc.
              *             salutation: Mr.
-             *             gender: m
              *             title: Dr.
-             *             email: example123@example.com
+             *             email: example@example.com
              *             phone: 0049-123-456789
+             *             mobile: 0049-987-654321
              *             dob: 1901-02-03T00:00:00+01:00
-             *             urlWebsite: example.com
-             *             birthplace: AnotherExampleCity
-             *             nationality: german
              *             address: class Address {
-             *                 street: example street
+             *                 street: Example Street
              *                 streetNumber: 6a
-             *                 city: Testcity
+             *                 city: Examplecity
              *                 postalCode: 01234
-             *                 country: DE
+             *                 country: Germany
              *             }
              *         }
-             *         created: 2019-09-24T16:13:10+02:00
+             *         created: 2019-11-18T10:51:10+01:00
              *     }
              *     redirectUrl: class SecupayRedirectUrl {
-             *         iframeUrl: https://api-testing.secupay-ag.de/payment/vfpeiqugpdug3478433
+             *         iframeUrl: https://api-dev6.secupay-ag.de/payment/jtpjsbqwhpnc4033079
              *         urlSuccess: http://example.com
              *         urlFailure: http://example.com
-             *         urlPush: https://example.com
+             *         urlPush: http://example.com/push_url
              *     }
-             *     subTransactions: [class SecupaySubTransactionProductModel {
-             *         id: vfpeiqugpdug3478433_14251592
-             *         transId: 14251592
-             *         amount: 3324
-             *         transactionStatus: 111
-             *         status: accepted
-             *         currency: EUR
-             *     }]
+             *     iframeUrl: https://api-dev6.secupay-ag.de/payment/jtpjsbqwhpnc4033079
              * }
              */
 
