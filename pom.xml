@@ -37,7 +37,7 @@
     <dependency>
       <groupId>io.secuconnect</groupId>
       <artifactId>secuconnect-java-sdk</artifactId>
-      <version>LATEST</version>
+      <version>1.8.1</version>
     </dependency>
   </dependencies>
   <repositories>

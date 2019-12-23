@@ -79,7 +79,6 @@ public class createCustomer {
              *     created: 2019-09-24T16:13:10+02:00
              * }
              */
-
         } catch (ApiException e) {
             e.printStackTrace();
             System.out.println("ERROR: " + e.getResponseBody());

@@ -3,10 +3,7 @@ package com.secuconnect.demo.payment.payout;
 import com.secuconnect.demo.getToken;
 import io.secuconnect.client.ApiException;
 import io.secuconnect.client.api.PaymentSecupayPayoutApi;
-import io.secuconnect.client.model.SecupayPayoutDTO;
-import io.secuconnect.client.model.SecupayPayoutProductModel;
-import io.secuconnect.client.model.SecupayRedirectUrl;
-import io.secuconnect.client.model.SecupayTransactionListItem;
+import io.secuconnect.client.model.*;
 
 import java.util.ArrayList;
 
@@ -16,7 +13,6 @@ public class createPayoutPayment {
             getToken.main(null);
 
             SecupayPayoutDTO transaction = new SecupayPayoutDTO();
-            transaction.setDemo(false);
             transaction.setCurrency("EUR");
             transaction.setContract("PCR_M32SCZ98Q2N3U4GW70ZAVWWE47XPAH");
 
@@ -27,7 +23,8 @@ public class createPayoutPayment {
             transaction.setOrderId("201900123");
 
             // See src/payment/createCustomer.java if you want to know how you can create a payment customer id
-            transaction.setCustomer("PCU_3BBSV6C702NCA4HR70ZAVCAX3R6CAW");
+            transaction.setCustomer(new PaymentCustomersProductModel());
+            transaction.getCustomer().setId("PCU_3BBSV6C702NCA4HR70ZAVCAX3R6CAW");
 
             SecupayTransactionListItem listItem1 = new SecupayTransactionListItem();
             listItem1.setReferenceId("2000.1");
