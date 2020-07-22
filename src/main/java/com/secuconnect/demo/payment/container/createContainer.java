@@ -3,9 +3,9 @@ package com.secuconnect.demo.payment.container;
 import com.secuconnect.demo.getToken;
 import io.secuconnect.client.ApiException;
 import io.secuconnect.client.api.PaymentContainersApi;
+import io.secuconnect.client.model.BankAccountDescriptor;
 import io.secuconnect.client.model.PaymentContainersDTO;
 import io.secuconnect.client.model.PaymentContainersDTOCustomer;
-import io.secuconnect.client.model.PaymentContainersDTOPrivate;
 import io.secuconnect.client.model.PaymentContainersProductModel;
 
 public class createContainer {
@@ -17,10 +17,11 @@ public class createContainer {
             container.setType("bank_account"); // optional "bank_account"
             container.setCustomer(new PaymentContainersDTOCustomer());
             container.getCustomer().setId("PCU_3BBSV6C702NCA4HR70ZAVCAX3R6CAW"); // from "payment/customer/createCustomer.java"
-            container.setPrivate(new PaymentContainersDTOPrivate());
-            container.getPrivate().setOwner("John Doe");
-            container.getPrivate().setIban("DE37503240001000000524");
-            container.getPrivate().setBic("FTSBDEFAXXX");
+            BankAccountDescriptor bankAccount = new BankAccountDescriptor();
+            bankAccount.setOwner("John Doe");
+            bankAccount.setIban("DE37503240001000000524");
+            bankAccount.setBic("FTSBDEFAXXX");
+            container.setPrivate(bankAccount);
 
             PaymentContainersApi apiInstance = new PaymentContainersApi();
             apiInstance.getApiClient().setAccessToken(getToken.accessToken);

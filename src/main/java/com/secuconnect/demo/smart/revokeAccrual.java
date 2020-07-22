@@ -13,7 +13,7 @@ public class revokeAccrual {
             PaymentTransactionsApi apiInstance = new PaymentTransactionsApi();
             apiInstance.getApiClient().setAccessToken(getToken.accessToken);
             PaymentTransactionsProductModel response = apiInstance.revokeAccrual(
-                    "PCI_WJGXA9JV74EKWBRGX5P8CB4A2908N8", null
+                    "PCI_WJGXA9JV74EKWBRGX5P8CB4A2908N8"
             );
 
             System.out.print(response);
