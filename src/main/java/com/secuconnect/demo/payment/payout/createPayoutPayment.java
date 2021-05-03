@@ -1,17 +1,20 @@
 package com.secuconnect.demo.payment.payout;
 
-import com.secuconnect.demo.getToken;
-import io.secuconnect.client.ApiException;
-import io.secuconnect.client.api.PaymentSecupayPayoutApi;
-import io.secuconnect.client.model.*;
+import com.secuconnect.client.Environment;
+import com.secuconnect.demo.Globals;
+import com.secuconnect.client.ApiException;
+import com.secuconnect.client.api.PaymentSecupayPayoutApi;
+import com.secuconnect.client.model.*;
 
 import java.util.ArrayList;
 
 public class createPayoutPayment {
     public static void main(String[] args) {
         try {
-            getToken.main(null);
+            // init env
+            Environment.getGlobalEnv().setCredentials(Globals.O_AUTH_CLIENT_CREDENTIALS);
 
+            // init request
             SecupayPayoutDTO transaction = new SecupayPayoutDTO();
             transaction.setCurrency("EUR");
             transaction.setContract("PCR_M32SCZ98Q2N3U4GW70ZAVWWE47XPAH");
@@ -57,7 +60,6 @@ public class createPayoutPayment {
             transaction.setAmount(amount); // in euro-cent
 
             PaymentSecupayPayoutApi apiInstance = new PaymentSecupayPayoutApi();
-            apiInstance.getApiClient().setAccessToken(getToken.accessToken);
             SecupayPayoutProductModel response = apiInstance.paymentSecupaypayoutPost(transaction);
 
             System.out.print(response);

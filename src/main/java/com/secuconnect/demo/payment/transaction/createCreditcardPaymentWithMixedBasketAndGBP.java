@@ -1,23 +1,20 @@
 package com.secuconnect.demo.payment.transaction;
 
-import com.secuconnect.demo.getToken;
-import io.secuconnect.client.ApiException;
-import io.secuconnect.client.Configuration;
-import io.secuconnect.client.api.PaymentSecupayCreditcardsApi;
-import io.secuconnect.client.api.PaymentSecupayPrepaysApi;
-import io.secuconnect.client.model.*;
+import com.secuconnect.client.Environment;
+import com.secuconnect.demo.Globals;
+import com.secuconnect.client.ApiException;
+import com.secuconnect.client.api.PaymentSecupayCreditcardsApi;
+import com.secuconnect.client.model.*;
 
 import java.util.ArrayList;
 
 public class createCreditcardPaymentWithMixedBasketAndGBP {
     public static void main(String[] args) {
         try {
-            // Live-Server:
-//            Configuration.getDefaultApiClient().setBasePath("https://connect.secucard.com/api/v2");
-//            Configuration.getDefaultApiClient().setAuthHost("https://connect.secucard.com/");
+            // init env
+            Environment.getGlobalEnv().setCredentials(Globals.O_AUTH_CLIENT_CREDENTIALS);
 
-            getToken.main(null); // All currencies are using the same credentials!
-
+            // init request
             SecupayTransactionProductDTO transaction = new SecupayTransactionProductDTO();
             transaction.setOptData(new SecupayTransactionProductDTOOptData());
             transaction.getOptData().setLanguage("de_DE"); // or "en_US" for english
@@ -67,7 +64,6 @@ public class createCreditcardPaymentWithMixedBasketAndGBP {
             transaction.getBasket().add(subTransactionForSubContract);
 
             PaymentSecupayCreditcardsApi apiInstance = new PaymentSecupayCreditcardsApi();
-            apiInstance.getApiClient().setAccessToken(getToken.accessToken);
             SecupayTransactionProductModel response = apiInstance.paymentSecupaycreditcardsPost(transaction);
 
             System.out.print(response);
@@ -82,7 +78,7 @@ public class createCreditcardPaymentWithMixedBasketAndGBP {
              *     status: internal_server_status
              *     amount: 3324
              *     currency: EUR
-             *     purpose: 
+             *     purpose:
              *     basket: [class SecupayBasketItem {
              *         itemType: sub_transaction
              *         name: Order 123

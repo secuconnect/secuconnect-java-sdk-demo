@@ -1,22 +1,29 @@
 package com.secuconnect.demo.payment.transaction;
 
-import com.secuconnect.demo.getToken;
-import io.secuconnect.client.ApiException;
-import io.secuconnect.client.api.PaymentSecupayPrepaysApi;
-import io.secuconnect.client.model.SecupayTransactionProductModel;
-import io.secuconnect.client.model.SecupayTransactionReverseAccrualDTO;
+import com.secuconnect.client.ApiException;
+import com.secuconnect.client.Environment;
+import com.secuconnect.client.api.PaymentSecupayPrepaysApi;
+import com.secuconnect.client.api.PaymentTransactionsApi;
+import com.secuconnect.client.model.PaymentTransactionsProductModel;
+import com.secuconnect.client.model.SecupayTransactionProductModel;
+import com.secuconnect.client.model.SecupayTransactionReverseAccrualDTO;
+import com.secuconnect.demo.Globals;
 
 public class revokeAccrual {
     public static void main(String[] args) {
         try {
-            getToken.main(null);
+            // init env
+            Environment.getGlobalEnv().setCredentials(Globals.O_AUTH_CLIENT_CREDENTIALS);
 
-            PaymentSecupayPrepaysApi apiInstance = new PaymentSecupayPrepaysApi();
-            apiInstance.getApiClient().setAccessToken(getToken.accessToken);
-            SecupayTransactionProductModel response = apiInstance.reverseAccrualByPaymentId(
+            // init request
+            SecupayTransactionProductModel response = new PaymentSecupayPrepaysApi().reverseAccrualByPaymentId(
                     "secupayprepays",
                     "vfpeiqugpdug3478433_14251592",
                     new SecupayTransactionReverseAccrualDTO()
+            );
+            // or
+            PaymentTransactionsProductModel response2 = new PaymentTransactionsApi().revokeAccrual(
+                "PCI_WJGXA9JV74EKWBRGX5P8CB4A2908N8"
             );
 
             System.out.print(response);

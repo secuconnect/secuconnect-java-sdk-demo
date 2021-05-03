@@ -1,18 +1,21 @@
 package com.secuconnect.demo.payment.contract;
 
-import com.secuconnect.demo.getToken;
-import io.secuconnect.client.ApiException;
-import io.secuconnect.client.api.PaymentContractsApi;
-import io.secuconnect.client.model.PaymentContractsDTOClone;
-import io.secuconnect.client.model.PaymentContractsProductModel;
-import io.secuconnect.client.model.PaymentInformation;
+import com.secuconnect.client.ApiException;
+import com.secuconnect.client.Environment;
+import com.secuconnect.client.api.PaymentContractsApi;
+import com.secuconnect.client.model.PaymentContractsDTOClone;
+import com.secuconnect.client.model.PaymentContractsProductModel;
+import com.secuconnect.client.model.PaymentInformation;
+import com.secuconnect.demo.Globals;
 import org.joda.time.DateTime;
 
 public class createMerchantWithoutIdentification {
     public static void main(String[] args) {
         try {
-            getToken.main(null);
+            // init env
+            Environment.getGlobalEnv().setCredentials(Globals.O_AUTH_CLIENT_CREDENTIALS);
 
+            // init request
             /*
              * bank account of the merchant to get the money
              */
@@ -29,9 +32,8 @@ public class createMerchantWithoutIdentification {
             requestData.setPayinAccount(false);
             requestData.setProject("project_name " + new DateTime().toString()); // must be unique for each request
 
-            PaymentContractsApi apiInstance = new PaymentContractsApi();
-            apiInstance.getApiClient().setAccessToken(getToken.accessToken);
-            PaymentContractsProductModel response = apiInstance.clone("me", requestData); //"me" is a shortcut for the current contract of the API-user
+            PaymentContractsProductModel response = new PaymentContractsApi().clone("me", requestData);
+            //"me" is a shortcut for the current contract of the API-user
 
             System.out.print(response);
 

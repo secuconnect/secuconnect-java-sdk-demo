@@ -1,21 +1,22 @@
 package com.secuconnect.demo.payment.transaction;
 
-import com.secuconnect.demo.getToken;
-import io.secuconnect.client.ApiException;
-import io.secuconnect.client.api.PaymentSecupayPrepaysApi;
-import io.secuconnect.client.model.SecupayTransactionProductModel;
-import io.secuconnect.client.model.SecupayTransactionSetShippingInformationDTO;
+import com.secuconnect.client.Environment;
+import com.secuconnect.demo.Globals;
+import com.secuconnect.client.ApiException;
+import com.secuconnect.client.api.PaymentSecupayPrepaysApi;
+import com.secuconnect.client.model.SecupayTransactionSetShippingInformationDTO;
 
 public class addInvoiceNumber {
     public static void main(String[] args) {
         try {
-            getToken.main(null);
+            // init env
+            Environment.getGlobalEnv().setCredentials(Globals.O_AUTH_CLIENT_CREDENTIALS);
 
+            // init request
             SecupayTransactionSetShippingInformationDTO info = new SecupayTransactionSetShippingInformationDTO();
             info.setInvoiceNumber("test1234");
 
             PaymentSecupayPrepaysApi apiInstance = new PaymentSecupayPrepaysApi();
-            apiInstance.getApiClient().setAccessToken(getToken.accessToken);
             apiInstance.setShippingInformationByPaymentId(
                     "secupayprepays",
                     "vfpeiqugpdug3478433_14251592",

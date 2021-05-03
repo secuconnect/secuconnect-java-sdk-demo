@@ -1,22 +1,22 @@
 package com.secuconnect.demo.payment.transaction;
 
-import com.secuconnect.demo.getToken;
-import io.secuconnect.client.ApiException;
-import io.secuconnect.client.api.PaymentTransactionsApi;
-import io.secuconnect.client.model.PaymentTransactionsList;
+import com.secuconnect.client.Environment;
+import com.secuconnect.demo.Globals;
+import com.secuconnect.client.ApiException;
+import com.secuconnect.client.api.PaymentTransactionsApi;
+import com.secuconnect.client.model.PaymentTransactionsList;
 
 public class getTransactions {
     public static void main(String[] args) {
         try {
-            getToken.main(null);
+            // init env
+            Environment.getGlobalEnv().setCredentials(Globals.O_AUTH_CLIENT_CREDENTIALS);
 
-            PaymentTransactionsApi apiInstance = new PaymentTransactionsApi();
-
+            // init request
             String query = "incoming_payment_date:*";
             String sort = "incoming_payment_date:desc";
 
-            apiInstance.getApiClient().setAccessToken(getToken.accessToken);
-            PaymentTransactionsList response = apiInstance.getAll(
+            PaymentTransactionsList response = new PaymentTransactionsApi().getAll(
                     10,
                     null,
                     null,

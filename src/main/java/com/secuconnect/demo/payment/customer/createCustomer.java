@@ -1,18 +1,21 @@
 package com.secuconnect.demo.payment.customer;
 
-import com.secuconnect.demo.getToken;
-import io.secuconnect.client.ApiException;
-import io.secuconnect.client.api.PaymentCustomersApi;
-import io.secuconnect.client.model.Address;
-import io.secuconnect.client.model.Contact;
-import io.secuconnect.client.model.PaymentCustomersDTO;
-import io.secuconnect.client.model.PaymentCustomersProductModel;
+import com.secuconnect.client.Environment;
+import com.secuconnect.demo.Globals;
+import com.secuconnect.client.ApiException;
+import com.secuconnect.client.api.PaymentCustomersApi;
+import com.secuconnect.client.model.Address;
+import com.secuconnect.client.model.Contact;
+import com.secuconnect.client.model.PaymentCustomersDTO;
+import com.secuconnect.client.model.PaymentCustomersProductModel;
 
 public class createCustomer {
     public static void main(String[] args) {
         try {
-            getToken.main(null);
+            // init env
+            Environment.getGlobalEnv().setCredentials(Globals.O_AUTH_CLIENT_CREDENTIALS);
 
+            // init request
             Contact customerContact = new Contact();
             customerContact.setSalutation("Mr.");
             customerContact.setTitle("Dr.");
@@ -40,7 +43,6 @@ public class createCustomer {
             customer.setContact(customerContact);
 
             PaymentCustomersApi apiInstance = new PaymentCustomersApi();
-            apiInstance.getApiClient().setAccessToken(getToken.accessToken);
             PaymentCustomersProductModel response = apiInstance.paymentCustomersPost(customer);
 
             System.out.print(response);

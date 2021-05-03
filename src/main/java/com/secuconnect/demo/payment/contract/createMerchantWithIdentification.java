@@ -1,16 +1,19 @@
 package com.secuconnect.demo.payment.contract;
 
-import com.secuconnect.demo.getToken;
-import io.secuconnect.client.ApiException;
-import io.secuconnect.client.api.PaymentContractsApi;
-import io.secuconnect.client.model.*;
+import com.secuconnect.client.Environment;
+import com.secuconnect.demo.Globals;
+import com.secuconnect.client.ApiException;
+import com.secuconnect.client.api.PaymentContractsApi;
+import com.secuconnect.client.model.*;
 import org.joda.time.DateTime;
 
 public class createMerchantWithIdentification {
     public static void main(String[] args) {
         try {
-            getToken.main(null);
+            // init env
+            Environment.getGlobalEnv().setCredentials(Globals.O_AUTH_CLIENT_CREDENTIALS);
 
+            // init request
             Contact contact = new Contact();
             /*
              * mandatory contact fields
@@ -66,9 +69,7 @@ public class createMerchantWithIdentification {
             /*
              * Submitting the data to the API
              */
-            PaymentContractsApi apiInstance = new PaymentContractsApi();
-            apiInstance.getApiClient().setAccessToken(getToken.accessToken);
-            PaymentContractsRequestIdResult response = apiInstance.requestId("me", requestData);
+            PaymentContractsRequestIdResult response = new PaymentContractsApi().requestId("me", requestData);
 
             System.out.print(response);
 
