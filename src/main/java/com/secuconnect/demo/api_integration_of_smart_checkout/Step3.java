@@ -22,7 +22,6 @@ public class Step3 {
             // run api call
             SmartTransactionsProductModel response = new SmartTransactionsApi().getOne("STX_NPNF3464P2X4YJ5RABEHH3SGZJXWAH");
             System.out.println(response.toString());
-            response.paymentInstructions(new PaymentInstructions()).id("");
             /*
              * Sample output:
              * ==============
