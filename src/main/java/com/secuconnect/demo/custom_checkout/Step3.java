@@ -37,7 +37,7 @@ public class Step3 {
                 "debit",
                 new SmartTransactionsPrepare()
                     .container(
-                        new ProductInstanceUID()
+                        (SmartTransactionPaymentContainerDTO) new ProductInstanceUID()
                             .id(container.getId())
                     )
             );

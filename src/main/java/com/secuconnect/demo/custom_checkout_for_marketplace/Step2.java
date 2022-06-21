@@ -87,7 +87,7 @@ public class Step2 {
                     new ProductInstanceID()
                         .id("GCR_2H69XY35227V2VKP9WRA3SJ0W95RP0")
                 )
-                .customer(new PaymentCustomersProductModel().contact(
+                .customer(new SmartTransactionPaymentCustomerDTO().contact(
                     new Contact()
                         .forename("Lesley")
                         .surname("Mustermann")
