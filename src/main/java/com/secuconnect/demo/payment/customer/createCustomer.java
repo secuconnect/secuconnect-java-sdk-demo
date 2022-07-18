@@ -26,7 +26,7 @@ public class createCustomer {
             customerContact.setDob("1901-02-03");
             customerContact.setUrlWebsite("example.com");
             customerContact.setBirthplace("AnotherExampleCity");
-            customerContact.setNationality("german");
+            customerContact.setNationality("DE");
             customerContact.setEmail("example123@example.com");
             customerContact.setPhone("0049-123-456789");
 

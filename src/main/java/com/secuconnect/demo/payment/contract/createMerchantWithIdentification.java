@@ -47,7 +47,7 @@ public class createMerchantWithIdentification {
             contact.setGender("m");
             contact.setUrlWebsite("example.com");
             contact.setBirthplace("AnotherExampleCity");
-            contact.setNationality("german");
+            contact.setNationality("DE");
 
             /*
              * bank account of the merchant to get the money
